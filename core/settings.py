@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'courier',
     'shipment',
-    'order'
 ]
 
 MIDDLEWARE = [
