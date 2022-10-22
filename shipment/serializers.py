@@ -9,10 +9,11 @@ from courier.serializers import CourierSerializer
 
 class StatusSipmentSerializer(serializers.ModelSerializer):
 
-
     class Meta:
         model = ShipmentStatus
         fields = "__all__"
+
+    
 
 
 class ShipmentSerializer(serializers.ModelSerializer):
@@ -22,7 +23,6 @@ class ShipmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shipment
         fields = "__all__"
-
 
     def get_courier(self,obj):
         courier = obj.courier

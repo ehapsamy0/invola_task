@@ -25,12 +25,19 @@ class ShipmentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView
 
     def patch(self,request,pk,*args,**kwargs):
         new_status = request.data.get('status')
-        print("new_status",new_status)
         if new_status:
             status_obj = get_object_or_404(ShipmentStatus,pk=new_status)
             shipment = get_object_or_404(Shipment,pk=pk)
             old_status = shipment.status
-            shipment.status = status_obj
+            if old_status.name == "cancel":
+                if shipment.courier.can_canceld:
+                    shipment.status = status_obj
+                else:
+                    message = {
+                        "message":f"You can't canceld this shipment"} 
+                    return Response(message,status=status.HTTP_400_BAD_REQUEST)
+            else:
+                shipment.status = status_obj
             message = {
                 "message":f"Done Change  Status Form {old_status} to {status_obj} '_^ "
             }
